@@ -1,0 +1,80 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 12px 24px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    font-family: "Inter", sans-serif;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.search-container {
+    position: relative;
+    flex: 1;
+    margin: 0 24px;
+    max-width: 500px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 14px;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 250px;
+    padding: 10px 12px 10px 36px;
+    border-radius: 8px;
+    border: none;
+    background-color: #f3f3f3;
+    font-size: 14px;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: #000000;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #999;
+    font-size: 14px;
+}
+
+.nav-link.active {
+    color: #333;
+    font-weight: bold;
+}
+
+.nav-link .icon {
+  font-size: 20px;
+  color: inherit; 
+}
+
+.icon {
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+}
+
+
+@media screen and (max-width: 400px) {
+    .navbar {
+        padding: 12px 0px;
+    }
+    
+}

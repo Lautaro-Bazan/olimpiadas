@@ -1,0 +1,44 @@
+.cartlink {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    margin-left: 50px;
+}
+
+.cartlink svg {
+    width: 24px;
+    height: 24px;
+}
+
+.cartlink h4 {
+    position: absolute;
+    bottom: -6px;
+    right: -10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 12px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (max-width: 550px) {
+    .cartlink {
+        margin-left: 0px;
+    }
+
+    .cartlink h4 {
+        right: -5px;
+        width: 14px;
+        height: 14px;
+        font-size: 10px;
+    }
+    
+}

@@ -1,19 +1,20 @@
 import { IoCartOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../../../context/CartContext";
+import "./cartWidget.css";
 
 export const CartWidget = () => {
     const { getTotalItems } = useContext(CartContext);
     let total = getTotalItems();
     return (
         <div>
-            <Link to="/carrito">
+            <NavLink  to="/carrito"   className={({ isActive }) => isActive ? "cartlink nav-link active" : "cartlink nav-link"}>
                 <IoCartOutline />
                 <div>
                     <h4>{total}</h4>
                 </div>
-            </Link>            
+            </NavLink>            
         </div>
     )
 }

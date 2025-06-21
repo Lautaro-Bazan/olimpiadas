@@ -1,0 +1,65 @@
+/* Contenedor principal */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  margin: 3rem 0;
+}
+
+/* Caja del formulario */
+.auth-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Título */
+.auth-title {
+  font-size: 2rem;
+  font-family: "Inter";
+  font-weight: bold;
+  color: #0f1127;
+  margin-bottom: 1.5rem;
+}
+
+/* Formulario */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Enlace "¿Olvidaste la contraseña?" */
+.forgot-password {
+  text-align: right;
+  font-size: 1rem;
+  color: #0066ff;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.forgot-password-link {
+  text-decoration: none;
+  color: #0066ff;
+  font-family: "Inter", sans-serif;
+}
+
+/* Botones */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
+.instructions {
+  margin-bottom: 20px;
+}

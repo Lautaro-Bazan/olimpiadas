@@ -1,0 +1,113 @@
+
+.button {
+    font-family: Arial, sans-serif;
+    font-weight: 500;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    font-size: 15px;
+}
+
+/* Variante outline (blanco con borde negro) */
+.button.outline {
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #000000;
+}
+
+.button.outline:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button.outline:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Variante filled (negro con texto blanco) */
+.button.filled {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+.button.filled:hover {
+    background-color: #333333;
+    border-color: #333333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button.filled:active {
+    background-color: #000000;
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+.button.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.button.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Focus para accesibilidad */
+.button:focus {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.button.filled:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .button.medium {
+        padding: 10px 20px;
+        font-size: 15px;
+        min-width: 100px;
+    }
+    
+    .button.large {
+        padding: 14px 28px;
+        font-size: 16px;
+        min-width: 140px;
+    }
+}
+
+@media (max-width: 480px) {
+    .button {
+        width: 100%;
+        min-width: auto;
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+    
+}
+
+/* Clases de utilidad adicionales */
+.button.full-width {
+    width: 100%;
+}
+
+.button.rounded {
+    border-radius: 25px;
+}
+
+.button.square {
+    border-radius: 0;
+}

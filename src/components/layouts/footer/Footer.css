@@ -1,0 +1,164 @@
+
+.footer {
+    background-color: #020202;
+    color: #ffffff;
+    padding: 60px 0 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-left {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.footer-logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.footer-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cccccc;
+    margin-bottom: 30px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.social-icon {
+    font-size: 30px;
+}
+
+.footer-middle {
+    flex: 1;
+    min-width: 200px;
+    margin-left: 130px;
+}
+
+
+.footer-right {
+    flex: 1;
+    min-width: 250px;
+}
+
+
+.footer-section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+
+.footer-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-link-list li {
+    margin-bottom: 8px;
+}
+
+.footer-link {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 2;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.footer-link:hover {
+    color: #ffffff;
+}
+
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-item {
+    font-size: 14px;
+    color: #cccccc;
+    margin: 0;
+    line-height: 1.5;
+}
+
+
+.footer-copyright {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #333333;
+    font-size: 12px;
+    color: #888888;
+}
+
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .footer-left,
+    .footer-middle,
+    .footer-right {
+        min-width: 100%;
+        max-width: none;
+        margin-left: 0;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .footer {
+        padding: 40px 0 20px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-container {
+        padding: 0 15px;
+    }
+    
+    .footer-logo {
+        font-size: 20px;
+    }
+    
+    .footer-section-title {
+        font-size: 16px;
+    }
+    
+    .social-links {
+        gap: 20px;
+    }
+}
