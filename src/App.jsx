@@ -15,6 +15,8 @@ import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
 //ADMIN
 import { Dashboard } from "./components/pages/dashboard/dashboard";
 import { ProductForm } from "./components/pages/dashboard/products/addProduct";
+import { EditProductForm } from "./components/pages/dashboard/products/editProduct";
+import { HistoricalOrderDetails } from "./components/pages/dashboard/orders/historicalOrderDetails"
 
 
 
@@ -50,7 +52,9 @@ function App() {
 
                 <Route element={<ProtectedAdminRoute />}>
                   <Route path="/dashboard" element={<Dashboard/>} />
-                   <Route path="/dashboard/agregar-producto" element={<ProductForm/>} />
+                  <Route path="/dashboard/agregar-producto" element={<ProductForm/>} />
+                  <Route path="/dashboard/editar-producto/:id" element={<EditProductForm />} />
+                  <Route path="/dashboard/historial-orden/:id" element={<HistoricalOrderDetails />} />
                 </Route>
 
                 <Route path="*" element={<h1>404 not found</h1>} />

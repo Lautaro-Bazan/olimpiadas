@@ -9,6 +9,7 @@ export const ProductsComponent = () => {
   const GET_PRODUCTS = gql`
     query {
       products {
+        id
         product_code
         name
         price
@@ -34,6 +35,10 @@ export const ProductsComponent = () => {
 
   const handleAddProduct = () => {
     navigation('/dashboard/agregar-producto');
+  }
+
+  const handleEditProduct = (id) => {
+    navigation('/dashboard/editar-producto/' + id);
   }
 
   return (
@@ -63,7 +68,7 @@ export const ProductsComponent = () => {
                 <td>{product.scope}</td>
                 <td>{mapCapacity(product.capacity)}</td>
                 <td>
-                  <button className="btn-action">Editar</button>
+                  <button className="btn-action" onClick={() => handleEditProduct(product.id)}>Editar</button>
                   <button className="btn-action danger">Eliminar</button>
                 </td>
               </tr>

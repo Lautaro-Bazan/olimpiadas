@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { gql } from 'graphql-request';
 import  { useGraphQL } from '../../../graphql/useGraphQL';
+import { useNavigate } from "react-router-dom";
 
 const GET_HISTORICAL_ORDERS = gql`
   query {
@@ -24,6 +25,7 @@ export const OrderHistoryComponent = () => {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [statusFilter, setStatusFilter] = useState("Todos");
   const [dateFilter, setDateFilter] = useState("");
+  const navigation = useNavigate();
 
   useEffect(() => {
     if (data?.historicalOrders) {
@@ -38,6 +40,10 @@ export const OrderHistoryComponent = () => {
       setFilteredOrders(filtered);
     }
   }, [data, statusFilter, dateFilter]);
+
+   const handleViewDetails = (id) => {
+    navigation('/dashboard/historial-orden/' + id);
+  }
 
   if (loading) return <p>Cargando historial...</p>;
   if (error) return <p>Error cargando historial.</p>;
@@ -93,7 +99,7 @@ export const OrderHistoryComponent = () => {
                   </td>
                   <td>{order.created_at.split(" ")[0]}</td>
                   <td>
-                    <button className="btn-action">Ver Detalles</button>
+                    <button className="btn-action" onClick={() => handleViewDetails(order.id)}>Ver Detalles</button>
                   </td>
                 </tr>
               );
