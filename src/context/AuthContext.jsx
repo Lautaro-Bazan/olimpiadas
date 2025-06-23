@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     fetchUser();
-    console.log("Token actual:", token);
+    //console.log("Token actual:", token);
   }, [token]);
 
   // Login 

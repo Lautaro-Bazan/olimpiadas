@@ -12,6 +12,11 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
 
 
+//ADMIN
+import { Dashboard } from "./components/pages/dashboard/dashboard";
+import { ProductForm } from "./components/pages/dashboard/products/addProduct";
+
+
 
 import { Checkout } from "./components/pages/checkout/Checkout";
 import { CartContextProvider } from "./context/CartContext";
@@ -44,7 +49,8 @@ function App() {
                 </Route>
 
                 <Route element={<ProtectedAdminRoute />}>
-                  <Route path="/dashboard" element={<Checkout />} />
+                  <Route path="/dashboard" element={<Dashboard/>} />
+                   <Route path="/dashboard/agregar-producto" element={<ProductForm/>} />
                 </Route>
 
                 <Route path="*" element={<h1>404 not found</h1>} />
