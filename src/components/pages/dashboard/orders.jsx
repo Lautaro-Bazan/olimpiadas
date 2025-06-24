@@ -1,9 +1,11 @@
 import { ShoppingCart, Package, Clock, Building2, Menu, X } from 'lucide-react';
 import { gql } from 'graphql-request';
 import  { useGraphQL } from '../../../graphql/useGraphQL';
+import { useNavigate } from 'react-router-dom';
 
 // Componente para Órdenes
 export const OrdersComponent = () => {
+  const navigation = useNavigate();
   const GET_ORDERS = gql`
     query {
       orders {
@@ -18,7 +20,7 @@ export const OrdersComponent = () => {
           lastname
         }
       }
-    }
+    } 
   `;
 
   const { data, loading, error } = useGraphQL(GET_ORDERS);
@@ -46,6 +48,10 @@ export const OrdersComponent = () => {
       default: return status;
     }
   }
+
+  const handleEditOrder = (id) => {
+    navigation('/dashboard/editar-orden/' + id);
+  };
 
   return (
     <div className="component-container">
@@ -75,8 +81,7 @@ export const OrdersComponent = () => {
                 </td>
                 <td>{order.date}</td>
                 <td>
-                  <button className="btn-action">Ver</button>
-                  <button className="btn-action">Editar</button>
+                  <button className="btn-action" onClick={() => handleEditOrder(order.id)} >Ver / Editar</button>
                 </td>
               </tr>
             ))}
