@@ -20,21 +20,18 @@ const GET_PRODUCT_QUERY = gql`
         origin
         destination
         airline
-        active
       }
       cars {
         id
         brand
         model
         agency
-        active
       }
       stays {
         id
         name
         type
         duration
-        active
       }
     }
   }
@@ -43,10 +40,10 @@ const GET_PRODUCT_QUERY = gql`
 const UPDATE_PRODUCT_MUTATION = gql`
   mutation UpdateProduct(
     $id: ID!
-    $input: CreateProductInput!
-    $flight: CreateFlightInput
-    $car: CreateCarInput
-    $stay: CreateStayInput
+    $input: UpdateProductInput!
+    $flight: UpdateFlightInput
+    $car: UpdateCarInput
+    $stay: UpdateStayInput
   ) {
     updateProduct(
       id: $id
@@ -55,6 +52,7 @@ const UPDATE_PRODUCT_MUTATION = gql`
       car: $car
       stay: $stay
     ) {
+      message
       product {
         id
         name
@@ -68,6 +66,7 @@ export const EditProductForm = () => {
   const navigate = useNavigate();
   const { mutate } = useMutationGraphQL();
   const { data, error } = useGraphQL(GET_PRODUCT_QUERY, { id: parseInt(id) });
+  console.log("data:", data, "error:", error);
 
   const [formData, setFormData] = useState({
     product_code: '',
@@ -89,16 +88,18 @@ export const EditProductForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Efecto corregido con dependencias apropiadas
   useEffect(() => {
-    const loadProduct = async () => {
-        if (error) {
-        alert("Error al cargar el producto.");
-        return;
+    if (error) {
+      alert("Error al cargar el producto.");
+      return;
     }
 
-    if (!data || !data.product) return; // Esperar a que data esté disponible
-
-    const product = data.product;
+    // Verificar que data y data.product existan
+    if (data?.product) {
+      const product = data.product;
+      
+      // Cargar datos básicos del producto
       setFormData({
         product_code: product.product_code || '',
         name: product.name || '',
@@ -107,21 +108,50 @@ export const EditProductForm = () => {
         capacity: product.capacity || 1,
         scope: product.scope || 'NACIONAL'
       });
-      if (product.flights?.length) {
-        setFlightData(product.flights[0]);
+
+      // Cargar datos de vuelo si existen
+      if (product.flights?.length > 0) {
+        const flight = product.flights[0];
+        setFlightData({
+          origin: flight.origin || '',
+          destination: flight.destination || '',
+          airline: flight.airline || ''
+        });
         setIncludeFlight(true);
+      } else {
+        setIncludeFlight(false);
+        setFlightData({ origin: '', destination: '', airline: '' });
       }
-      if (product.cars?.length) {
-        setCarData(product.cars[0]);
+
+      // Cargar datos de auto si existen
+      if (product.cars?.length > 0) {
+        const car = product.cars[0];
+        setCarData({
+          brand: car.brand || '',
+          model: car.model || '',
+          agency: car.agency || ''
+        });
         setIncludeCar(true);
+      } else {
+        setIncludeCar(false);
+        setCarData({ brand: '', model: '', agency: '' });
       }
-      if (product.stays?.length) {
-        setStayData(product.stays[0]);
+
+      // Cargar datos de estadía si existen
+      if (product.stays?.length > 0) {
+        const stay = product.stays[0];
+        setStayData({
+          name: stay.name || '',
+          duration: stay.duration || '',
+          type: stay.type || 'HOTEL'
+        });
         setIncludeStay(true);
+      } else {
+        setIncludeStay(false);
+        setStayData({ name: '', duration: '', type: 'HOTEL' });
       }
-    };
-    loadProduct();
-  }, [id]);
+    }
+  }, [data, error]); // Dependencias correctas
 
   const handleInputChange = (e, section) => {
     const { name, value } = e.target;
@@ -155,9 +185,10 @@ export const EditProductForm = () => {
     if (includeCar) variables.car = carData;
     if (includeStay) variables.stay = stayData;
 
-    const {  error } = await mutate(UPDATE_PRODUCT_MUTATION, variables);
+    const { error } = await mutate(UPDATE_PRODUCT_MUTATION, variables);
 
     if (error) {
+      console.error('Mutation error:', error);
       const validation = error?.response?.errors?.[0]?.extensions?.validation;
       if (validation && validation['input.product_code']) {
         alert('El código del producto ya está en uso. Por favor elige otro.');
@@ -173,6 +204,30 @@ export const EditProductForm = () => {
   };
 
   const handleGoBack = () => navigate('/dashboard');
+
+  // Mostrar loading mientras se cargan los datos
+  if (!data && !error) {
+    return (
+      <div className="product-form-container">
+        <div className="form-header">
+          <h1>Cargando producto...</h1>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar error si no se puede cargar el producto
+  if (error || !data?.product) {
+    return (
+      <div className="product-form-container">
+        <div className="form-header">
+          <h1>Error al cargar el producto</h1>
+          <p>No se pudo cargar la información del producto.</p>
+          <Button onClick={handleGoBack}>Volver al Panel</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="product-form-container">
