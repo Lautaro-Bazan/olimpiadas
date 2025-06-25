@@ -6,7 +6,7 @@ export const Counter = ({item}) => {
     const { addToCart} = useContext(CartContext);
 
     const sumar = () => {
-        if (contador < item.stock){
+        if (contador < 10){
             setContador(contador + 1);
         }
         
