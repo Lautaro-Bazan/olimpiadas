@@ -9,7 +9,7 @@ import './itemListContainer.css'
 const GET_PRODUCTS = `
   query {
     products {
-      id 
+      id
       name
       description
       price
@@ -20,39 +20,57 @@ const GET_PRODUCTS = `
 export const ItemListContainer = () => {
     const [filteredItems, setFilteredItems] = useState([]);
     const [sortOrder, setSortOrder] = useState('all');
+    const [currentPage, setCurrentPage] = useState(1);
     const { name } = useParams();
-    
+   
+    // Configuración de paginación
+    const ITEMS_PER_PAGE = 10;
+   
     // Hook de GraphQL para obtener productos
     const { data, loading, error, refetch } = useGraphQL(GET_PRODUCTS);
-    
+   
     // Extraer productos de la respuesta
     const products = data?.products || [];
-    
+   
     useEffect(() => {
         let productsFiltered = [...products];
-        
+       
         // Filtrar por categoría si existe el parámetro
         if (name && products.length > 0) {
             productsFiltered = products.filter(
                 (elemento) => elemento.category === name
             );
         }
-        
+       
         // Aplicar ordenamiento por precio
         if (sortOrder === 'asc') {
             productsFiltered.sort((a, b) => a.price - b.price);
         } else if (sortOrder === 'desc') {
             productsFiltered.sort((a, b) => b.price - a.price);
         }
-        
+       
         setFilteredItems(productsFiltered);
+        // Resetear a la primera página cuando cambian los filtros
+        setCurrentPage(1);
     }, [products, name, sortOrder]);
-    
+   
+    // Calcular productos para la página actual
+    const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const currentItems = filteredItems.slice(startIndex, endIndex);
+   
     const handlePriceFilterChange = (e) => {
         const value = e.target.value;
         setSortOrder(value);
     };
-    
+   
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        // Scroll hacia arriba al cambiar de página (opcional)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+   
     // Manejar estados de carga y error
     if (loading) {
         return (
@@ -65,7 +83,7 @@ export const ItemListContainer = () => {
             </main>
         );
     }
-    
+   
     if (error) {
         return (
             <main>
@@ -80,17 +98,22 @@ export const ItemListContainer = () => {
             </main>
         );
     }
-    
+   
     return(
         <main>
             <div className="travel-grid-container">
                 <div className="header">
                     <div className="packages-count">
                         Paquetes: <span className="count-number">{filteredItems.length}</span>
+                        {filteredItems.length > ITEMS_PER_PAGE && (
+                            <span className="page-info">
+                                (Mostrando {startIndex + 1}-{Math.min(endIndex, filteredItems.length)} de {filteredItems.length})
+                            </span>
+                        )}
                     </div>
                     <div className="price-filter">
                         <span className="filter-label">Precio</span>
-                        <select 
+                        <select
                             className="filter-select"
                             value={sortOrder}
                             onChange={handlePriceFilterChange}
@@ -102,8 +125,8 @@ export const ItemListContainer = () => {
                     </div>
                 </div>      
                 <div className="travel-grid">
-                    {filteredItems.length > 0 ? (
-                        filteredItems.map((elemento) => (
+                    {currentItems.length > 0 ? (
+                        currentItems.map((elemento) => (
                             <ProductCard key={elemento.id} {...elemento}/>
                         ))
                     ) : (
@@ -112,7 +135,13 @@ export const ItemListContainer = () => {
                         </div>
                     )}
                 </div>      
-                <Pagination currentPage={1} totalPages={12} />
+                {totalPages > 1 && (
+                    <Pagination 
+                        currentPage={currentPage} 
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                )}
             </div>
         </main>
     )
